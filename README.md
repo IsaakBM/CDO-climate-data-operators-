@@ -53,6 +53,8 @@ To use `ncview` open the terminal and type:
 
 #### Regridding with CDO
 
+See the [Github repo](https://github.com/IsaakBM/CDO-climate-data-operators-) to access all files.
+
 If you want to regrid and interpolate a **netCDF** file with **CDO**, the easiest way (for me) is create a standard grid with the argument `griddes`.
 
   Using the `EN.4.2.1.f.analysis.g10.196001.nc` (which has a 1º of spatial resolution) I will create a standard of 1ºx 1º. In the terminal type:

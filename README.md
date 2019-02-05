@@ -71,4 +71,11 @@ If you want to regrid and interpolate a **netCDF** file with **CDO**, the easies
 
   **NOTE: In this example I'm regridding the same file, but you can repit the same process for any input file**
 
+#### CDO multiple input files
+
+See the [Github repo](https://github.com/IsaakBM/CDO-climate-data-operators-) to access all files.
+
+*in progress*
+
+
 

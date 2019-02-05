@@ -12,7 +12,7 @@ If you work on a **MacOS** Platform this guide is for you. For others operative 
 
 [Linux](https://code.mpimet.mpg.de/projects/cdo/wiki/Linux_Platform)
 
-
+Please contact [Isaac Brito-Morales](i.britomorales@uq.edu.au) if you want to use this scripts, or to provide feed-back.
 
 ### Installation Process 
 

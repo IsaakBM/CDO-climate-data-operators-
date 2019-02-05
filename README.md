@@ -2,7 +2,7 @@
 
 Here I'm going to describe how to work with **CDO** if you work with *CMIP5* climatic data
 
-The intention with this info (and scripts) is to provide a basic undersantig of how you can use **CDO** to speed-up your **netCDF** file data manipulation. 
+The intention with this info (and scripts) is to provide a basic understanding of how you can use **CDO** to speed-up your **netCDF** file data manipulation. 
 
 [More info go directly to the Max Planck Institute CDO website](https://code.mpimet.mpg.de/projects/cdo/)
 

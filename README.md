@@ -14,12 +14,9 @@ If you work on a **MacOS** Platform this guide is for you. For others operative 
 
 
 
-## Installation Process 
+### Installation Process 
 
-- [1. MacPorts]
-- [2. Ncview: a netCDF visual browser]
-
-### 1. MacPorts
+#### MacPorts
 
 I couldn't install **CDO** from `homebrew` so I followed the instruction and downloaded MacPorts. **MacPorts** is an open-source community initiative to design an easy-to-use system for compiling, installing, and upgrading the command-line on the Mac operating system. 
 
@@ -35,7 +32,7 @@ If you don't have admin rights, open the terminal and type:
 
   `sudo port install cdo` and write your password
 
-### 2. Ncview: a netCDF visual browser
+#### Ncview: a netCDF visual browser
 
 Browsing and browsing, I found a quick visual browser that allows you to explore **netCDF** files very easily: `ncview` 
 

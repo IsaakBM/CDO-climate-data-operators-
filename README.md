@@ -6,6 +6,8 @@ The intention with this info (and scripts) is to provide a basic understanding o
 
 [More info go directly to the Max Planck Institute CDO website](https://code.mpimet.mpg.de/projects/cdo/)
 
+[CMIP5 climatic data](https://esgf-node.llnl.gov/projects/esgf-llnl/)
+
 If you work on a **MacOS** Platform this guide is for you. For others operative systems go to:
 
 [Windows](https://code.mpimet.mpg.de/projects/cdo/wiki/Win32)
@@ -44,7 +46,7 @@ To install **ncview**, open the terminal and type:
   
 To use `ncview` open the terminal and type:
 
-  `cd /download/data/` (where my netCDF file is located).
+  `cd ~/download/data/` (where my netCDF file is located).
   Check if your file is there with
   `ls -lthr` 
   and then type `ncview EN.4.2.1.f.analysis.g10.196001.nc` to use ncview 
@@ -71,11 +73,22 @@ If you want to regrid and interpolate a **netCDF** file with **CDO**, the easies
 
   **NOTE: In this example I'm regridding the same file, but you can repit the same process for any input file**
 
-#### CDO multiple input files
+#### CDO with multiple input files
 
-See the [Github repo](https://github.com/IsaakBM/CDO-climate-data-operators-) to access all files.
+The previous "regridding process" works fine if you have one or two **netCDF** files. However, if you have multiple **netCDF** files (which is the most cases of CMIP5 climatic models) the best way to do it is to write a simple *shell* script to iterate the same process for every file.
 
-*in progress*
+  Look the components of the shell file `cdo_rg.sh` from the [Github repo](https://github.com/IsaakBM/CDO-climate-data-operators-) 
+  
+  If you have problems to run the script open the terminal and type: 
+  
+  `chmod +x cdo_rg.sh`
+  
+#### CDO annual means, min, max
+
+  in progress
+
+
+
 
 
 

@@ -85,8 +85,13 @@ The previous "regridding process" works fine if you have one or two **netCDF** f
   
 #### CDO annual means, min, max
 
-  in progress
+  `cdo yearmean` calculates the *annual mean* of a monthly data input **netCDF** file
+  
+  `cdo yearmin` calculates the *annual min* of a monthly data input **netCDF** file
+  
+  `cdo yearmax` calculates the *annual max* of a monthly data input **netCDF** file
 
+  **NOTE: you can repeat the same process described above for multiple files. See the [Github repo](https://github.com/IsaakBM/CDO-climate-data-operators-) to access the scripts.**
 
 
 

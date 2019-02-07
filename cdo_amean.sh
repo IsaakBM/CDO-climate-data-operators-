@@ -8,6 +8,6 @@ do
 m=$(printf "%.2d" "$m")
 echo MEMBER $m
 
-cdo yearmean thetao_${m}_Omon_ACCESS1-0_rcp45_r1i1p1.nc thetao_${m}_am_Omon_ACCESS1-3_rcp45_r1i1p1.nc
+cdo yearmean thetao_${m}_Omon_CMCC-CMS_rcp45_r1i1p1.nc thetao_${m}_amean_Omon_CMCC-CMS_rcp45_r1i1p1.nc
 
 done

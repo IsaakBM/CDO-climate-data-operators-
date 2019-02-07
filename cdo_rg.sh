@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-for m in `seq 1 10`
+for m in `seq 1 19`
 do
 
 # Trick to padd zeros in ksh you would use TYPESET

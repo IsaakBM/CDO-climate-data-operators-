@@ -8,6 +8,6 @@ do
 m=$(printf "%.2d" "$m")
 echo MEMBER $m
 
-cdo yearmax thetao_${m}_rg_Omon_ACCESS1-3_rcp45_r1i1p1.nc thetao_${m}_amax_Omon_ACCESS1-3_rcp45_r1i1p1.nc
+cdo yearmax thetao_${m}_Omon_CMCC-CMS_rcp45_r1i1p1.nc thetao_${m}_amax_Omon_CMCC-CMS_rcp45_r1i1p1.nc
 
 done

@@ -42,7 +42,7 @@ Browsing and browsing, I found a quick visual browser that allows you to explore
 
 To install **ncview**, open the terminal and type:
 
-  `port ncview`
+  `port install ncview`
   
 To use `ncview` open the terminal and type:
 

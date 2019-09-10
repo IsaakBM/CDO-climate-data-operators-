@@ -1,4 +1,4 @@
-# Working with CDO (climate data operators)
+# Working with CDO (climate data operators) (UPDATE IN PROGRESS)
 
 Here I'm going to describe how to work with **CDO** if you work with *CMIP5* climatic data
 

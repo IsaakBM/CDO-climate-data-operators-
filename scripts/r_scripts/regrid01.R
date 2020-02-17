@@ -1,14 +1,15 @@
 library(doParallel)
 library(parallel)
 
-ipath <- "/QRISdata/Q1216/BritoMorales/zztest/regrid" # Input path
-opath <- "/QRISdata/Q1216/BritoMorales/zztest/regrid/" # Output path
+ipath <- "/Users/bri273/Desktop/CDO/models_raw/ssp126" # Input path
+opath <- "/Users/bri273/Desktop/CDO/models_regrid/ssp126/" # Output path
 
 dir.nc <- paste(list.dirs(path = ipath, full.names = TRUE, recursive = FALSE))
 
 for(i in 1:length(dir.nc)) {
   file.grd <- paste(dir.nc[i], list.files(path = paste(dir.nc[i], sep = "/"), pattern = "*.grd"), sep = "/")
   files.nc <- paste(dir.nc[i], list.files(path = paste(dir.nc[i], sep = "/"), pattern = "*.nc"), sep = "/")
+  
   UseCores <- 21
   cl <- makeCluster(UseCores)  
   registerDoParallel(cl)

@@ -1,7 +1,7 @@
 library(doParallel)
 library(parallel)
 
-ipath <- "/Users/bri273/Desktop/CDO/models_regrid" # Input path
+ipath <- "/Users/bri273/Desktop/CDO/models_regrid/ssp126" # Input path
 opath <- "/Users/bri273/Desktop/CDO/models_regrid_layers/" # Output path
 dir.nc <- paste(list.dirs(path = ipath, full.names = TRUE, recursive = FALSE))
 

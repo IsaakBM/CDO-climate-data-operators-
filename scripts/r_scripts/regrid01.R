@@ -15,7 +15,7 @@ for(i in 1:length(dir.nc)) {
   registerDoParallel(cl)
   
   foreach(j = 1:length(files.nc)) %dopar% {
-    system(paste(paste("cdo remapbil,", file.grd, ",", sep = ""), files.nc[j], paste0(opath, basename(files.nc[j])), sep = (" ")))
+    system(paste(paste("cdo -L remapbil,", file.grd, ",", sep = ""), files.nc[j], paste0(opath, basename(files.nc[j])), sep = (" ")))
   } 
   stopCluster(cl)
 }

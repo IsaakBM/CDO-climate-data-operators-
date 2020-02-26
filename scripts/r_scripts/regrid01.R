@@ -10,7 +10,7 @@ for(i in 1:length(dir.nc)) {
   file.grd <- paste(dir.nc[i], list.files(path = paste(dir.nc[i], sep = "/"), pattern = "*.grd"), sep = "/")
   files.nc <- paste(dir.nc[i], list.files(path = paste(dir.nc[i], sep = "/"), pattern = "*.nc"), sep = "/")
   
-  UseCores <- 21
+  UseCores <- detectCores() - 1
   cl <- makeCluster(UseCores)  
   registerDoParallel(cl)
   

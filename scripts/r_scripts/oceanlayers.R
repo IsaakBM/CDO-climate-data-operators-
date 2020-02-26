@@ -5,7 +5,7 @@ ipath <- "/Users/bri273/Desktop/CDO/models_regrid/ssp126" # Input path
 opath <- "/Users/bri273/Desktop/CDO/models_regrid_layers/" # Output path
 dir.nc <- paste(list.dirs(path = ipath, full.names = TRUE, recursive = FALSE))
 
-for(i in 1:length(dir.nc)) {
+for(i in 1:length(dir.nc)) { # number of models inside ssps scenarios
   files.nc <- paste(dir.nc[i], list.files(path = paste(dir.nc[i], sep = "/"), pattern = "*.nc"), sep = "/")
   levels <- as.vector(system(paste("cdo showlevel", files.nc[1]), intern = TRUE))
   

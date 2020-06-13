@@ -7,14 +7,11 @@ library(parallel)
 # opath <- "/Users/bri273/Desktop/CDO/models_regrid/ssp126/" # Output path
 # opath <- "/QRISdata/Q1215/ClimateModels/y_test/ssp126/"
 
-ipath <- "/QRISdata/Q1215/ClimateModels/CMIP6_rclean/thetao/ssp245"
-opath <- "/QRISdata/Q1215/ClimateModels/CMIP6_rclean_regrid/thetao_05deg/ssp245/"
+ipath <- "/QRISdata/Q1215/ClimateModels/CMIP6_rclean/thetao/ssp585"
+opath <- "/QRISdata/Q1215/ClimateModels/CMIP6_rclean_regrid/thetao_05deg/ssp585/"
 
 # ipath <- "/QRISdata/Q1215/ClimateModels/y_test/ssp126"
 # opath <- "/QRISdata/Q1215/ClimateModels/CMIP6_rclean_regrid/thetao_01deg/ssp126/"
-
-# ipath <- "/QRISdata/Q1215/ClimateModels/CMIP6_rclean/tos_oday/ssp585"
-# opath <- "/QRISdata/Q1215/ClimateModels/CMIP6_rclean_regrid/tos_oday_01deg/"
   
 dir.nc <- paste(list.dirs(path = ipath, full.names = TRUE, recursive = FALSE))
 

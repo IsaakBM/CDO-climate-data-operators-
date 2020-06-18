@@ -135,6 +135,9 @@ plot(kader:::cuberoot(test$layer))
 
 writeRaster(test, "CMIP6_zrasters_r1i1p1f1/ssp126/RCE_02-ep_AEMean_ssp126_r1i1p1f1_2015-2020_.tif")
 
-nomv <- raster("CMIP6_zrasters_r1i1p1f1/ssp126/non-moving_02-ep_AEMean_ssp126_r1i1p1f1_2020-2100_.tif")
-plot(nomv)
+non126 <- raster("CMIP6_zrasters_r1i1p1f1/ssp126/non-moving_02-ep_AEMean_ssp126_r1i1p1f1_2020-2100_.tif")
+plot(non126)
+non245 <- raster("CMIP6_zrasters_r1i1p1f1/ssp126/non-moving_02-ep_AEMean_ssp245_r1i1p1f1_2020-2100_.tif")
+plot(non245)
+
 

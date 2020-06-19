@@ -10,7 +10,7 @@
 # to = end year of raster files
 # bathymetry = ETOPOS shapefile
 
-model.mean <- function(path, outdir, from, to, bathymetry) {
+model.mean <- function(path, outdir, from, to) {
   # Packages
   library(raster)
   library(doParallel)
@@ -28,15 +28,6 @@ model.mean <- function(path, outdir, from, to, bathymetry) {
       return(d)
     }
   
-  # Bathymetry layers
-  etopo <- raster(bathymetry)
-    bathy_sf <- bathy_ep <- bathy_mp <- bathy_bap <- etopo
-    bathy_sf[] <- ifelse(etopo[] > 0, NA, etopo[])
-    bathy_ep[] <- ifelse(etopo[] > 0, NA, etopo[])
-    bathy_mp[] <- ifelse(etopo[] > -200, NA, etopo[])
-    bathy_bap[] <- ifelse(etopo[] > -1000, NA, etopo[])
-  bathy <- stack(bathy_sf, bathy_ep, bathy_mp, bathy_bap)
-
   # Climate Models Depth Layers Directory
     dir.layers <- paste(list.dirs(path = path, full.names = TRUE, recursive = FALSE), sep = "/")
     
@@ -90,15 +81,15 @@ model.mean <- function(path, outdir, from, to, bathymetry) {
             # Create a ensemble-model average
               rs_list_b <- unlist(rs_list)
               final.mean <- staking(rs_list_b)
-              # Bathymetry to "adjust" cells with ETOPO1 layer at 1°
+              # Bathymetry to "adjust" cells with ETOPO1 layer at 1° [BUT NOT HERE...]
                 for(b in 1:nlayers(final.mean)) {
                   if(b == 1) {
                     single <- subset(final.mean, b)
-                    dt1 <- mask(single, resample(subset(bathy, kk), single, resample = "ngb"))
+                    dt1 <- single
                     st1 <- dt1
                     } else {
                       single <- subset(final.mean, b)
-                      dt1 <- mask(single, resample(subset(bathy, kk), single, resample = "ngb"))
+                      dt1 <- single
                       st1 <- stack(st1, dt1)
                     }
                   }
@@ -114,11 +105,10 @@ model.mean <- function(path, outdir, from, to, bathymetry) {
   }
 
 
-  system.time(model.mean(path = "/Users/bri273/Desktop/CDO/CMIP6_zrasters_r1i1p1f1/ssp126",
-                         outdir = "/Users/bri273/Desktop/CDO/CMIP6_zrasters_r1i1p1f1/ssp126/",
+  system.time(model.mean(path = "/QRISdata/Q1216/BritoMorales/Project04b/CMIP6_zrasters/tob_05deg/ssp126",
+                         outdir = "/QRISdata/Q1216/BritoMorales/Project04b/CMIP6_zrasters_zensemble/tob_05deg/ssp126/05_Bottom/",
                          from = "2015",
-                         to = "2100",
-                         bathymetry = "/Users/bri273/Desktop/VoCC_Prioritizr_global/shapefiles_rasters/ETOPO1_05deg/ETOPO1_ocean.grd"))
+                         to = "2100"))
 
 
   

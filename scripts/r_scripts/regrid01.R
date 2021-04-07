@@ -49,7 +49,7 @@ regrid <- function(ipath, opath, resolution) {
       grd <- "r360x180"
     } else if(resolution == "0.5") {
       grd <- "r720x360"
-    } else if(resolution == "0.5") {
+    } else if(resolution == "0.25") {
       grd <- "r1440x720"
     }
     
@@ -65,6 +65,6 @@ regrid <- function(ipath, opath, resolution) {
     stopCluster(cl)
 }
 
-regrid(ipath = "/Users/bri273/Desktop/CDO/models_raw/ssp126/ACCESS-CM2/", 
-       opath = "/Users/bri273/Desktop/CDO/models_raw/", 
+regrid(ipath = "/Users/bri273/Desktop/CDO/models_raw/ssp126/", 
+       opath = "/Users/bri273/Desktop/CDO/models_regrid/", 
        resolution = "1")

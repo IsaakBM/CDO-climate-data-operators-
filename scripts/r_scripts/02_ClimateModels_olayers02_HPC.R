@@ -67,8 +67,8 @@ olayer <- function(ipath, opath1, opath2) {
                        paste0(opath1, "02-ep_", basename(files.nc[j]))))
         # Mesopelagic
           system(paste(paste("cdo -L -sellevel,", paste0(mp, collapse = ","), ",", sep = ""), 
-                       paste("-selname,", var, sep = ""), files.nc[1], 
-                       paste0(opath1, "03-mp_", basename(files.nc[1]))))
+                       paste("-selname,", var, sep = ""), files.nc[j], 
+                       paste0(opath1, "03-mp_", basename(files.nc[j]))))
         # Bathypelagic
           system(paste(paste("cdo -L -sellevel,", 
                              paste0(bap, collapse = ","), ",", sep = ""), 
@@ -98,8 +98,8 @@ olayer <- function(ipath, opath1, opath2) {
     registerDoParallel(cl)
     foreach(i = 1:length(files.nc.2), .packages = c("stringr")) %dopar% {
       # Running CDO
-        system(paste(paste("cdo -L vertmean", sep = ""), files.nc.2[i], 
-                     paste0(opath2, basename(files.nc.2[i])), sep = (" ")))
+        Sys.sleep(300)
+        system(paste(paste("cdo -L vertmean", sep = ""), files.nc.2[i], paste0(opath2, basename(files.nc.2[i])), sep = (" ")))
     }
     stopCluster(cl)
 }

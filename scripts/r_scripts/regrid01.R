@@ -22,7 +22,7 @@ regrid <- function(ipath, opath, resolution) {
   lapply(list.of.packages, require, character.only = TRUE)
   
 ####################################################################################
-####### 
+####### Getting the path and directories for the files
 ####################################################################################
   # 
     line1 <- paste(noquote("find"), noquote(ipath), "-type", "f", "-name", noquote("*.nc"), "-exec", "ls", "-l", "{}")
@@ -37,14 +37,11 @@ regrid <- function(ipath, opath, resolution) {
       c1 <- str_split(unlist(x), pattern = "//")
       c2 <- paste(c1[[1]][1], c1[[1]][2], sep = "/")})
     files.nc <- unlist(final_nc)
-  # 
-    var_obj <- system(paste("cdo -showname", final_nc[1]), intern = TRUE)[1]
-    var <- str_replace_all(string = var_obj, pattern = " ", replacement = "")
  
 ####################################################################################
-####### 
+####### Starting the regrid process
 #################################################################################### 
-  # 
+  # Resolution wanted
     if(resolution == "1") {
       grd <- "r360x180"
     } else if(resolution == "0.5") {
@@ -53,14 +50,19 @@ regrid <- function(ipath, opath, resolution) {
       grd <- "r1440x720"
     }
     
-  # 
+  # Parallel looop
     UseCores <- 3
     cl <- makeCluster(UseCores)  
     registerDoParallel(cl)
-    foreach(j = 1:length(files.nc)) %dopar% {
-      system(paste(paste("cdo -remapbil,", grd, ",", sep = ""), 
-                   paste("-selname",var, sep = ","), files.nc[j], 
-                   paste0(opath, basename(files.nc[j])), sep = (" ")))
+    foreach(j = 1:length(files.nc), .packages = c("stringr")) %dopar% {
+      # Trying to auto the name for every model
+        var_obj <- system(paste("cdo -showname", files.nc[j]), intern = TRUE)
+        var_all <- str_replace_all(string = var_obj, pattern = " ", replacement = "_")
+        var <- tail(unlist(strsplit(var_all, split = "_")), n = 1)
+      # Running CDO regrid
+        system(paste(paste("cdo -remapbil,", grd, ",", sep = ""), 
+                     paste("-selname",var, sep = ","), files.nc[j], 
+                     paste0(opath, basename(files.nc[j])), sep = (" ")))
     }
     stopCluster(cl)
 }

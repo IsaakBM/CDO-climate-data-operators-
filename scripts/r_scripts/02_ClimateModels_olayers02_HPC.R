@@ -105,6 +105,6 @@ olayer <- function(ipath, opath1, opath2) {
     stopCluster(cl)
 }
 
-olayer(ipath = "/gpfs1/scratch/30days/uqibrito/models_regrid/",
-       opath1 = "/gpfs1/scratch/30days/uqibrito/models_regrid_layers/", 
-       opath2 = "/gpfs1/scratch/30days/uqibrito/models_regrid_vertmean/")
+olayer(ipath = "/gpfs1/scratch/30days/uqibrito/Project05c_Anne/ClimateModels/models_regrid/",
+       opath1 = "/gpfs1/scratch/30days/uqibrito/Project05c_Anne/ClimateModels/models_regrid_layers/", 
+       opath2 = "/gpfs1/scratch/30days/uqibrito/Project05c_Anne/ClimateModels/models_regrid_vertmean/")

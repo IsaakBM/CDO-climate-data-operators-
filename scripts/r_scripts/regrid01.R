@@ -24,24 +24,24 @@ regrid <- function(ipath, opath, resolution) {
 ####################################################################################
 ####### Getting the path and directories for the files
 ####################################################################################
-  # 
+  # Establish the find bash command
     line1 <- paste(noquote("find"), noquote(ipath), "-type", "f", "-name", noquote("*.nc"), "-exec", "ls", "-l", "{}")
     line2 <- paste0("\\", ";")
     line3 <- paste(line1, line2)
-  # 
+  # Getting a list of directories for every netCDF file
     dir_files <- system(line3, intern = TRUE)
     dir_vector <- strsplit(x = dir_files, split = " ")
     dir_nc <- lapply(dir_vector, function(x) x[13])
-  # 
-    final_nc <- lapply(dir_nc, function(x) {
-      c1 <- str_split(unlist(x), pattern = "//")
-      c2 <- paste(c1[[1]][1], c1[[1]][2], sep = "/")})
-    files.nc <- unlist(final_nc)
+    # Cleaning the directories to get a final vector of directories
+      final_nc <- lapply(dir_nc, function(x) {
+        c1 <- str_split(unlist(x), pattern = "//")
+        c2 <- paste(c1[[1]][1], c1[[1]][2], sep = "/")})
+      files.nc <- unlist(final_nc)
  
 ####################################################################################
 ####### Starting the regrid process
 #################################################################################### 
-  # Resolution wanted
+  # Resolution? You can add more if you want (but do not push too much!)
     if(resolution == "1") {
       grd <- "r360x180"
     } else if(resolution == "0.5") {
@@ -51,14 +51,14 @@ regrid <- function(ipath, opath, resolution) {
     }
     
   # Parallel looop
-    UseCores <- 3
+    UseCores <- 3 # we can change this number in the HPC or your machine (mine is crap)
     cl <- makeCluster(UseCores)  
     registerDoParallel(cl)
     foreach(j = 1:length(files.nc), .packages = c("stringr")) %dopar% {
       # Trying to auto the name for every model
         var_obj <- system(paste("cdo -showname", files.nc[j]), intern = TRUE)
         var_all <- str_replace_all(string = var_obj, pattern = " ", replacement = "_")
-        var <- tail(unlist(strsplit(var_all, split = "_")), n = 1)
+        var <- tail(unlist(strsplit(var_all, split = "_")), n = 1) # i believe that the name of the variable is always at the end
       # Running CDO regrid
         system(paste(paste("cdo -remapbil,", grd, ",", sep = ""), 
                      paste("-selname",var, sep = ","), files.nc[j], 

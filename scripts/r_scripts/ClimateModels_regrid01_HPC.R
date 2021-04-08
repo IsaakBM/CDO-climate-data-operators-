@@ -9,18 +9,11 @@
 # resolution = resolution for the regrid process
 
 regrid <- function(ipath, opath, resolution) {
+  library(doParallel)
+  library(parallel)
+  library(stringr)
+  library(data.table)
 
-####################################################################################
-####### Defining the main packages (tryining to auto this)
-####################################################################################
-  # List of pacakges that we will be used
-    list.of.packages <- c("doParallel", "parallel", "stringr", "data.table")
-  # If is not installed, install the pacakge
-    new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-    if(length(new.packages)) install.packages(new.packages)
-  # Load packages
-    lapply(list.of.packages, require, character.only = TRUE)
-  
 ####################################################################################
 ####### Getting the path and directories for the files
 ####################################################################################
@@ -30,13 +23,8 @@ regrid <- function(ipath, opath, resolution) {
     line3 <- paste(line1, line2)
   # Getting a list of directories for every netCDF file
     dir_files <- system(line3, intern = TRUE)
-    dir_nc <- tail(unlist(strsplit(x = dir_files, split = " ")), n = 1)
-    # Cleaning the directories to get a final vector of directories
-    final_nc <- lapply(dir_nc, function(x) {
-      c1 <- str_split(unlist(x), pattern = "//")
-      c2 <- paste(c1[[1]][1], c1[[1]][2], sep = "/")})
-    files.nc <- unlist(final_nc)
- 
+    files.nc <- tail(unlist(strsplit(x = dir_files, split = " ")), n = 1)
+    
 ####################################################################################
 ####### Starting the regrid process
 #################################################################################### 
@@ -50,7 +38,7 @@ regrid <- function(ipath, opath, resolution) {
     }
     
   # Parallel looop
-    UseCores <- 10 # we can change this number in the HPC or your machine (mine is crap)
+    UseCores <- 10
     cl <- makeCluster(UseCores)  
     registerDoParallel(cl)
     foreach(j = 1:length(files.nc), .packages = c("stringr")) %dopar% {

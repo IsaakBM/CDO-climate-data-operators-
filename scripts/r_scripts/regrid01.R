@@ -30,9 +30,10 @@ regrid <- function(ipath, opath, resolution) {
     line3 <- paste(line1, line2)
   # Getting a list of directories for every netCDF file
     dir_files <- system(line3, intern = TRUE)
-    dir_nc <- tail(unlist(strsplit(x = dir_files, split = " ")), n = 1)
-    # Cleaning the directories to get a final vector of directories
-    final_nc <- lapply(dir_nc, function(x) {
+    dir_nc <- strsplit(x = dir_files, split = " ")
+    nc_list <- lapply(dir_nc, function(x){f1 <- tail(x, n = 1)})
+  # Cleaning the directories to get a final vector of directories
+    final_nc <- lapply(nc_list, function(x) {
       c1 <- str_split(unlist(x), pattern = "//")
       c2 <- paste(c1[[1]][1], c1[[1]][2], sep = "/")})
     files.nc <- unlist(final_nc)
@@ -66,11 +67,6 @@ regrid <- function(ipath, opath, resolution) {
     stopCluster(cl)
 }
 
-# regrid(ipath = "/Users/bri273/Desktop/CDO/models_raw/ssp126/ACCESS-CM2/", 
-#        opath = "/Users/bri273/Desktop/CDO/models_regrid/", 
-#        resolution = "1")
-
-regrid(ipath = "/QRISdata/Q1215/ClimateModels/CMIP6_raw/MPI-ESM1-2-HR/ssp126/Omon/ph/", 
-       opath = "/QRISdata/Q1216/BritoMorales/Project05c_Anne/ClimateModels/", 
-       resolution = "0.25")
-
+regrid(ipath = "/Users/bri273/Desktop/CDO/models_raw/ssp126/",
+       opath = "/Users/bri273/Desktop/CDO/models_regrid/",
+       resolution = "1")

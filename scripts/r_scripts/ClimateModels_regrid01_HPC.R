@@ -12,7 +12,6 @@ regrid <- function(ipath, opath, resolution) {
   library(doParallel)
   library(parallel)
   library(stringr)
-  library(data.table)
 
 ####################################################################################
 ####### Getting the path and directories for the files
@@ -23,7 +22,9 @@ regrid <- function(ipath, opath, resolution) {
     line3 <- paste(line1, line2)
   # Getting a list of directories for every netCDF file
     dir_files <- system(line3, intern = TRUE)
-    files.nc <- tail(unlist(strsplit(x = dir_files, split = " ")), n = 1)
+    dir_nc <- strsplit(x = dir_files, split = " ")
+    final_nc <- lapply(dir_nc, function(x){f1 <- tail(x, n = 1)})
+    files.nc <- unlist(final_nc)
     
 ####################################################################################
 ####### Starting the regrid process
@@ -38,8 +39,7 @@ regrid <- function(ipath, opath, resolution) {
     }
     
   # Parallel looop
-    UseCores <- 10
-    cl <- makeCluster(UseCores)  
+    cl <- makeCluster(10)
     registerDoParallel(cl)
     foreach(j = 1:length(files.nc), .packages = c("stringr")) %dopar% {
       # Trying to auto the name for every model
@@ -47,18 +47,18 @@ regrid <- function(ipath, opath, resolution) {
         var_all <- str_replace_all(string = var_obj, pattern = " ", replacement = "_")
         var <- tail(unlist(strsplit(var_all, split = "_")), n = 1) # i believe that the name of the variable is always at the end
       # Running CDO regrid
-        system(paste(paste("cdo -remapbil,", grd, ",", sep = ""), 
+        system(paste(paste("cdo -P 2 -remapbil,", grd, ",", sep = ""), 
                      paste("-selname",var, sep = ","), files.nc[j], 
                      paste0(opath, basename(files.nc[j])), sep = (" "))) # -P 2
     }
     stopCluster(cl)
 }
 
-# regrid(ipath = "/Users/bri273/Desktop/CDO/models_raw/ssp126/ACCESS-CM2/", 
+# regrid(ipath = "/Users/bri273/Desktop/CDO/models_raw/ssp126/", 
 #        opath = "/Users/bri273/Desktop/CDO/models_regrid/", 
 #        resolution = "1")
 
 regrid(ipath = "/QRISdata/Q1215/ClimateModels/CMIP6_raw/MPI-ESM1-2-HR/ssp126/Omon/ph/", 
-       opath = "/QRISdata/Q1216/BritoMorales/Project05c_Anne/ClimateModels/", 
+       opath = "/gpfs1/scratch/30days/uqibrito/", 
        resolution = "0.25")
 

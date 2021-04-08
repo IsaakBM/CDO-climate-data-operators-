@@ -9,6 +9,7 @@
 # resolution = resolution for the regrid process
 
 regrid <- function(ipath, opath, resolution) {
+  
   library(doParallel)
   library(parallel)
   library(stringr)

@@ -10,16 +10,9 @@
 
 olayer <- function(ipath, opath1, opath2) {
 
-####################################################################################
-####### Defining the main packages (tryining to auto this)
-####################################################################################
-  # List of pacakges that we will be used
-    list.of.packages <- c("doParallel", "parallel", "stringr", "data.table")
-  # If is not installed, install the pacakge
-    new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-    if(length(new.packages)) install.packages(new.packages)
-  # Load packages
-    lapply(list.of.packages, require, character.only = TRUE)
+  library(doParallel)
+  library(parallel)
+  library(stringr)
   
 ####################################################################################
 ####### Getting the path and directories for the files
@@ -31,18 +24,14 @@ olayer <- function(ipath, opath1, opath2) {
   # Getting a list of directories for every netCDF file
     dir_files <- system(line3, intern = TRUE)
     dir_nc <- strsplit(x = dir_files, split = " ")
-    nc_list <- lapply(dir_nc, function(x){f1 <- tail(x, n = 1)})
-  # Cleaning the directories to get a final vector of directories
-    final_nc <- lapply(nc_list, function(x) {
-      c1 <- str_split(unlist(x), pattern = "//")
-      c2 <- paste(c1[[1]][1], c1[[1]][2], sep = "/")})
+    final_nc <- lapply(dir_nc, function(x){f1 <- tail(x, n = 1)})
     files.nc <- unlist(final_nc)
  
 ####################################################################################
 ####### Filtering by layers and generating new netCDF files with outputs
 #################################################################################### 
   # Parallel looop
-    cl <- makeCluster(3)
+    cl <- makeCluster(10)
     registerDoParallel(cl)
     foreach(j = 1:length(files.nc), .packages = c("stringr")) %dopar% {
       # Trying to auto the name for every model
@@ -99,18 +88,14 @@ olayer <- function(ipath, opath1, opath2) {
   # Getting a list of directories for every netCDF file
     dir_files.2 <- system(line3.1, intern = TRUE)
     dir_nc.2 <- strsplit(x = dir_files.2, split = " ")
-    nc_list.2 <- lapply(dir_nc.2, function(x){f1 <- tail(x, n = 1)})
-  # Cleaning the directories to get a final vector of directories
-    final_nc.2 <- lapply(nc_list.2, function(x) {
-      c1 <- str_split(unlist(x), pattern = "//")
-      c2 <- paste(c1[[1]][1], c1[[1]][2], sep = "/")})
+    final_nc.2 <- lapply(dir_nc.2, function(x){f1 <- tail(x, n = 1)})
     files.nc.2 <- unlist(final_nc.2)
     
 ####################################################################################
 ####### Filtering by layers and generating the "weighted-average depth layer" netCDF files
 #################################################################################### 
   # Parallel looop
-    cl <- makeCluster(3)
+    cl <- makeCluster(10)
     registerDoParallel(cl)
     foreach(i = 1:length(files.nc.2), .packages = c("stringr")) %dopar% {
       # Running CDO

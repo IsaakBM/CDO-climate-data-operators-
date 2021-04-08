@@ -55,11 +55,7 @@ regrid <- function(ipath, opath, resolution) {
     stopCluster(cl)
 }
 
-# regrid(ipath = "/Users/bri273/Desktop/CDO/models_raw/ssp126/", 
-#        opath = "/Users/bri273/Desktop/CDO/models_regrid/", 
-#        resolution = "1")
-
 regrid(ipath = "/QRISdata/Q1215/ClimateModels/CMIP6_raw/MPI-ESM1-2-HR/ssp126/Omon/ph/", 
-       opath = "/gpfs1/scratch/30days/uqibrito/", 
+       opath = "/gpfs1/scratch/30days/uqibrito/Project05c_Anne/ClimateModels/models_regrid/", 
        resolution = "0.25")
 

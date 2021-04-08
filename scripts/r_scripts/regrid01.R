@@ -9,17 +9,20 @@
 # resolution = resolution for the regrid process
 
 regrid <- function(ipath, opath, resolution) {
-  
+  library(doParallel)
+  library(parallel)
+  library(stringr)
+  library(data.table)
 ####################################################################################
 ####### Defining the main packages (tryining to auto this)
 ####################################################################################
-  # List of pacakges that we will be used
-  list.of.packages <- c("doParallel", "parallel", "stringr", "data.table")
-  # If is not installed, install the pacakge
-  new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-  if(length(new.packages)) install.packages(new.packages)
-  # Load packages
-  lapply(list.of.packages, require, character.only = TRUE)
+  # # List of pacakges that we will be used
+  # list.of.packages <- c("doParallel", "parallel", "stringr", "data.table")
+  # # If is not installed, install the pacakge
+  # new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+  # if(length(new.packages)) install.packages(new.packages)
+  # # Load packages
+  # lapply(list.of.packages, require, character.only = TRUE)
   
 ####################################################################################
 ####### Getting the path and directories for the files
@@ -51,7 +54,7 @@ regrid <- function(ipath, opath, resolution) {
     }
     
   # Parallel looop
-    UseCores <- 3 # we can change this number in the HPC or your machine (mine is crap)
+    UseCores <- 10 # we can change this number in the HPC or your machine (mine is crap)
     cl <- makeCluster(UseCores)  
     registerDoParallel(cl)
     foreach(j = 1:length(files.nc), .packages = c("stringr")) %dopar% {
@@ -62,11 +65,16 @@ regrid <- function(ipath, opath, resolution) {
       # Running CDO regrid
         system(paste(paste("cdo -remapbil,", grd, ",", sep = ""), 
                      paste("-selname",var, sep = ","), files.nc[j], 
-                     paste0(opath, basename(files.nc[j])), sep = (" ")))
+                     paste0(opath, basename(files.nc[j])), sep = (" "))) # -P 2
     }
     stopCluster(cl)
 }
 
-regrid(ipath = "/Users/bri273/Desktop/CDO/models_raw/ssp126/", 
-       opath = "/Users/bri273/Desktop/CDO/models_regrid/", 
-       resolution = "1")
+# regrid(ipath = "/Users/bri273/Desktop/CDO/models_raw/ssp126/ACCESS-CM2/", 
+#        opath = "/Users/bri273/Desktop/CDO/models_regrid/", 
+#        resolution = "1")
+
+regrid(ipath = "/QRISdata/Q1215/ClimateModels/CMIP6_raw/MPI-ESM1-2-HR/ssp126/Omon/ph/", 
+       opath = "/QRISdata/Q1216/BritoMorales/Project05c_Anne/ClimateModels/", 
+       resolution = "0.25")
+

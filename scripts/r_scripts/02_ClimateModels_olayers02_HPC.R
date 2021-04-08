@@ -43,7 +43,7 @@ olayer <- function(ipath, opath1, opath2) {
         lev <- unlist(strsplit(levels, split = " "))
         depths <- unique(lev[lev != ""])
       # Some can come in cm
-        if(depths[1] >= 50) { 
+        if(as.numeric(depths[1]) >= 50) { 
           sf <- depths[as.numeric(depths) <= 500]
           ep <- depths[as.numeric(depths) >= 0 & as.numeric(depths) <= 20000]
           mp <- depths[as.numeric(depths) > 20000 & as.numeric(depths) <= 100000]
@@ -66,10 +66,9 @@ olayer <- function(ipath, opath1, opath2) {
                        paste("-selname,", var, sep = ""), files.nc[j], 
                        paste0(opath1, "02-ep_", basename(files.nc[j]))))
         # Mesopelagic
-          system(paste(paste("cdo -L -sellevel,", 
-                             paste0(mp, collapse = ","), ",", sep = ""), 
-                       paste("-selname,", var, sep = ""), files.nc[j], 
-                       paste0(opath1, "03-mp_", basename(files.nc[j]))))
+          system(paste(paste("cdo -L -sellevel,", paste0(mp, collapse = ","), ",", sep = ""), 
+                       paste("-selname,", var, sep = ""), files.nc[1], 
+                       paste0(opath1, "03-mp_", basename(files.nc[1]))))
         # Bathypelagic
           system(paste(paste("cdo -L -sellevel,", 
                              paste0(bap, collapse = ","), ",", sep = ""), 

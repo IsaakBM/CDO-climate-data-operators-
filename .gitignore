@@ -2,3 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+/models_raw
+/models_regrid
+/models_regrid_layers
+/models_regrid_vertmean
+/models_regrid_zmerge
+/rdm/images_cmip6_cdo
+/rdm/images_uq_cloud_hpc

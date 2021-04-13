@@ -1,0 +1,228 @@
+---
+title: "Working with High Performance Computing (and some extra resources) at UQ"
+author: "Isaac Brito-Morales"
+date: "31/05/2020"
+output: rmdformats::readthedown
+  # html_document: default
+  # pdf_document: default
+  # toc: yes
+  # toc_depth: 2
+  # word_document: default
+---
+
+- [1. UQ Research Data Manager]
+- [2. UQ Research Computing Centre and HPC]
+- [3. Login access to HPC]
+- [4. Putting your data on HPC]
+- [5. Running jobs on HPC]
+
+
+[**Mathematical Marine Ecology Lab**](https://mathmarecol.github.io/)
+
+# 1. UQ Research Data Manager
+
+The UQ Research Data Manager (UQRDM) has been specifically designed to help researchers manage their project's research data from project conception, to the publication and dissemination of results. More info/details go here [**UQ Research Data Manager**](https://guides.library.uq.edu.au/for-researchers/uq-research-data-manager/about)
+
+Some features:
+
+- Provides 1TB of data storage per project - this can be increased on request via ITS
+- Minimises the occurrence of data loss/leakage
+- Offers ease of access to stored data, via either desktop or a user friendly cloud based service (for UQ and external collaborators).
+
+```{r UQRDM, echo = FALSE, fig.cap = "UQ Research Data Manager (UQRDM)", out.width = '100%'}
+knitr::include_graphics("images_uq_cloud_hpc/rdm2.png")
+```
+
+### Login access to RDM
+##### **Windows 10**
+
+In the current windows 10 version(s) Microsoft included an Ubuntu 16.04 LTS embedded Linux. This environment offers a clean integration with the windows file systems and and the opportunity to use the Linux language.
+
+*NOTE: If your are using Windows your desktop path should be located at `/mnt/c/ `*
+
+##### **MacOS/Linux**
+
+Using the terminal access.
+
+##### **Access via terminal:**
+
+- `ssh <username>@data.qriscloud.org.au`
+- Where `<username>` is your staff or student login
+- If a popup appears saying `"Authenticity can't be established"`. Say yes
+- Enter your password
+
+##### **Advanced access (Simplify with SSH Config File):**
+
+- `nano ~/.ssh/config`
+
+```{r}
+# Host cloud
+#         Hostname data.qriscloud.org.au
+#         Protocol 2
+#         Port 22
+#     IdentityFile ~/.ssh/id_rsa
+#     IdentitiesOnly yes
+#     User <username>
+#         ForwardAgent yes
+#     ForwardX11 yes
+#     ServerAliveInterval 240
+#     ServerAliveCountMax 3
+```
+
+- ssh `cloud`
+- Enter your password
+
+##### **Web based access:**
+
+- Go to the [**UQRDM Cloud interface**](https://cloud.rdm.uq.edu.au/). Login using your UQ credentials. 
+
+##### **Access using FileZilla:**
+
+The main purpose of Filezilla is to make it easy for you to upload and download files from your web hosting server (in this case UQRDM/HPCs). You can also edit the files and save changes without the need of manually downloading and uploading.
+
+- Protocol = `SFTP - SSH File Transfer Protocol`
+- Host = `ssh1.qriscloud.org.au`
+- User = `your staff or student login`
+- Password = `your staff or student password`
+
+# 2. UQ Research Computing Centre and HPC
+
+The **Research Computing Centre (RCC)** provides coordinated management and support of The University of Queensland’s sustained and substantial investment in
+eResearch. The RCC helps UQ researchers across disciplines make the most of the University’s eResearch technologies, such as High Performance Computing
+(HPC), data storage, data management, visualisation, workflow and videoconferencing.
+
+The RCC coordinates access and support for 3 HPCs (High Performance Computers) and the Research Data Manager (RDM).
+
+### Getting access
+
+Go to [**qriscloud**](https://www.qriscloud.org.au/) and register for an account. Logging with your UQ staff account, which may require logging out of any UQ websites. This step is automated, and you will be granted access immediately.
+
+```{r ssps, echo = FALSE, fig.cap = "Overview of QRIScloud", out.width = '100%'}
+knitr::include_graphics("images_uq_cloud_hpc/qriscloud.png")
+```
+You must apply separately for each HPC server you want to access, providing a “technical justification”. You apply at [**qriscloud**](https://www.qriscloud.org.au/).
+
+The 3 HPCs under the RCC banner are:
+
+- **FlashLite**
+- **Tinaroo**
+- **Awoonga** (this is the one that you will get access)
+
+```{r hpc01 alias, echo = FALSE, fig.cap = "HPC_details", out.width = '100%'}
+knitr::include_graphics("images_uq_cloud_hpc/hpc_details.png")
+```
+
+(Some!) technical justification for Awoonga HPC is:
+
+- Your code is written to use multiple cores within your computer
+- You are doing embarrassingly parallel work or parameter sweeps, where each run is independent
+
+More info/details go here [**HPC Reading Guide**](http://www2.rcc.uq.edu.au/hpc/guides/index.html?secure/Reading_Guide.html) (through UQ network only)
+
+### Who can use the HPC/cluster?
+
+- Any researcher within UQ
+- Any researcher who is actively collaborating with a UQ researcher
+- Any researcher within QCIF member universities
+
+# 3. Login access to HPC
+
+You must be on the UQ intranet to access the servers. If you are connected to eduroam/uq cable/uq wifi, then you are already in the intranet.
+
+```{r cluster alias, echo = FALSE, fig.cap = "Cluster detail access", out.width = '100%'}
+knitr::include_graphics("images_uq_cloud_hpc/login_nodes.png")
+```
+
+For now, let's login using the terminal access:
+
+- `ssh <username>@awoonga.qriscloud.org.au`
+- Enter your password
+
+If you have follow the previous steps you should something similar to this:
+
+```{r awoonga01, echo = FALSE, fig.cap = "Awoonga", out.width = '100%'}
+knitr::include_graphics("images_uq_cloud_hpc/awoonga01.png")
+```
+
+From above, we can see the quotas and limits by each directory. For example:
+
+- `/home` 20GB
+- `/90days` 400GB
+- `/30days` 1TB
+
+Those directories are the "places" in the HPC (awoonga) in which you should allocate your data for the analyses. The names refer to the time that your data can be storage there. For instance, in `/30days` all data will be deleted after 30 days.
+
+*NOTE: The home directory is often used for programs and configuration files. R libraries will install here by default, which is fine. Don’t use the home directory for data sets, results and plots.*
+
+##### **Let's check the root directory**
+
+```{r}
+# ls /
+```
+```{r root01, echo = FALSE, fig.cap = "root directory", out.width = '100%'}
+knitr::include_graphics("images_uq_cloud_hpc/rootdir.png")
+```
+You can check what's in there by using the `ls -l` bash command. It will give you a list contents of a directory, for example folder and file names. 
+```{r}
+# ls -l 30days/uqibrito/
+```
+Replace **my username** by your own **user name**
+
+You can use the `cd` (“change directory”) command to change the current working directory. 
+```{r}
+# cd 30days/uqibrito/
+```
+
+# 4. Putting your data on HPC
+### scp
+scp is copy over ssh, it should work anywhere ssh works.
+```{r}
+# scp -r <your_machine_name>@<username>.vpn.uq.edu.au:/<your_local_folder>/ <username>@awoonga1.qriscloud.org.au:/30days/<username>/ 
+```
+
+Perhaps the simplest way is to use **Filezilla** (or any graphical interface for scp):
+
+- Protocol = `SFTP - SSH File Transfer Protocol`
+- Host = `awoonga1.rcc.uq.edu.au`
+- User = `your staff or student login`
+- Password = `your staff or student password`
+
+# 5. Running jobs on HPC
+### Modules
+To allow different versions of software to be used by different users, Awoonga uses Linux modules. For example, on Awoonga, `R` is in a module, and won’t work until you load the module. You can use the default version of a module, or specify a particular version of a module if your job depends on it.
+
+To see what modules are available, type:
+
+- `module available`
+
+When you see a module you want to use, load it with:
+
+- `module load <module_name>` (e.g., try R/3.5.0-intel)
+
+
+Some useful commands
+
+- `module spider R` how many version of `R` are in the HPC/cluster (always specify versions when sending jobs)
+- `module list` list all loaded modules
+- `module purge` clear module loaded
+
+### Submitting a Job via PBS
+
+For the moment, you can get more information [here](http://www2.rcc.uq.edu.au/hpc/guides/index.html?secure/Batch_PBSPro.html). NOTE: You need to VPN in if not on campus. 
+
+A typical PBS job looks like this: 
+```{r}
+#!/bin/bash
+#PBS -A qris-uq
+#PBS -l walltime=3:00:00
+#PBS -l select=1:ncpus=24:mem=80GB
+
+# cd $PBS_O_WORKDIR
+
+# module load R/3.5.0-intel
+
+# R CMD BATCH "<directory>"
+```
+
+
+

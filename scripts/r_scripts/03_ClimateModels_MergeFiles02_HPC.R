@@ -61,5 +61,5 @@ merge_files <- function(ipath, opath1) {
     stopCluster(cl)
 }
 
-merge_files(ipath = "/gpfs1/scratch/30days/uqibrito/Project05c_Anne/ClimateModels/models_regrid_vertmean/",
-            opath1 = "/gpfs1/scratch/30days/uqibrito/Project05c_Anne/ClimateModels/models_regrid_zmerge/")
+merge_files(ipath = "/gpfs1/scratch/30days/uqibrito/Project05c_Anne/ClimateModels/ph/ssp585/models_regrid_vertmean/",
+            opath1 = "/gpfs1/scratch/30days/uqibrito/Project05c_Anne/ClimateModels/ph/ssp585/models_regrid_zmerge/")

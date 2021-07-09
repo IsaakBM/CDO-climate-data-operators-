@@ -67,6 +67,6 @@ regrid <- function(ipath, opath, resolution) {
     stopCluster(cl)
 }
 
-regrid(ipath = "/Users/bri273/Desktop/CDO/models_raw/ssp126/",
+regrid(ipath = "/Users/bri273/Desktop/CDO/models_raw/",
        opath = "/Users/bri273/Desktop/CDO/models_regrid/",
-       resolution = "1")
+       resolution = "0.5")
